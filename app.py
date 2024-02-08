@@ -445,7 +445,7 @@ if prompt := st.chat_input():
         result_prompt_command = process_based_on_chosen_tool(choosed_tool, user_entity, full_question)
         response_content += f"{result_prompt_command}\n\n"
 
-        st.write(response_content)
+        # st.write(response_content)
 
         final_prompt_command=f"{result_prompt_command}\n\n사용자의 질문: {full_question}"
 
@@ -457,7 +457,7 @@ if prompt := st.chat_input():
                 {"role": "system", "content": "Answer only with the information mentioned in the prompt. Please summarize all the answers. If you don't have the information you need to answer, reply '관련 정보가 없어서 답변해드릴 수 없습니다.'."},
                 {"role": "user", "content": final_prompt_command}
             ],
-            temperature=0.0,
+            temperature=1.0,
             stream=True,
         )
         response = st.write_stream(stream)
