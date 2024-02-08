@@ -445,7 +445,7 @@ if prompt := st.chat_input():
         result_prompt_command = process_based_on_chosen_tool(choosed_tool, user_entity, full_question)
         response_content += f"{result_prompt_command}\n\n"
 
-        # st.write(response_content)
+        st.write(response_content)
 
         final_prompt_command=f"{result_prompt_command}\n\n사용자의 질문: {full_question}"
 
