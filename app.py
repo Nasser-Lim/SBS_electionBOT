@@ -46,8 +46,8 @@ with st.sidebar:
     st.markdown("🤖<strong>“이렇게 질문해보세요!”</strong>", unsafe_allow_html=True)
     st.markdown("""
     - 임종석은 어디서 출마했니?
-    - 김은혜 후보의 출마 정보는?
-    - 원희룡의 후보 정보 알려줘
+    - 김은혜의 상세한 출마 정보는?
+    - 원희룡의 후보 정보를 모두 알려줘
     - 서울 마포갑 후보들은 누구?
     - 전북 군산에서 나온 후보들은?
     - 대전 동구의 후보 등록 상황은?
@@ -404,7 +404,7 @@ st.title("🧐4월 총선을 알려줘!🗳️")
 # 세션 상태에 'messages'가 없으면 초기 메시지를 설정합니다.
 인사말 = """
 안녕하세요, 저는 총선 챗봇 '땡땡이'입니다. 
-언론사에서 챗GPT 기술이 어떻게 활용될 수 있을지 SBS 구성원들에게 예시로 보여드리기 위한 목적으로 개발됐습니다.
+언론사에서 챗GPT 기술이 어떻게 활용될 수 있을지 SBS 구성원들에게 예시로 보여드리기 위한 테스트 목적으로 개발됐습니다.
 자, 그럼 총선에 대해 무엇을 알고 싶으신가요? 제가 엉뚱하게 대답했을 땐 재차 질문해주세요!👀
 """
 
@@ -445,7 +445,7 @@ if prompt := st.chat_input():
         result_prompt_command = process_based_on_chosen_tool(choosed_tool, user_entity, full_question)
         response_content += f"{result_prompt_command}\n\n"
 
-        st.write(response_content)
+        # st.write(response_content)
 
         final_prompt_command=f"{result_prompt_command}\n\n사용자의 질문: {full_question}"
 
