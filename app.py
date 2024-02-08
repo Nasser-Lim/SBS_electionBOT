@@ -457,7 +457,7 @@ if prompt := st.chat_input():
                 {"role": "system", "content": "Answer only with the information mentioned in the prompt. Please summarize all the answers. If you don't have the information you need to answer, reply '관련 정보가 없어서 답변해드릴 수 없습니다.'."},
                 {"role": "user", "content": final_prompt_command}
             ],
-            temperature=1.0,
+            temperature=0.2,
             stream=True,
         )
         response = st.write_stream(stream)
