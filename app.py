@@ -8,8 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 client = OpenAI(
-    # This is the default and can be omitted
-    api_key=st.secrets(["OPENAI_API_KEY"])
+    api_key=st.secrets["OPENAI_API_KEY"]
 )
 
 def download_and_store_df(file_id, key):
