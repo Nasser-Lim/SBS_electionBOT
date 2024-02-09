@@ -45,7 +45,6 @@ def download_and_store_df(file_id, key):
 with st.sidebar:
     st.markdown("🤖<strong>“이렇게 질문해보세요!”</strong>", unsafe_allow_html=True)
     st.markdown("""
-    - 임종석은 어디서 출마했니?
     - 김은혜 후보의 상세한 정보 알려줘
     - 원희룡의 후보 정보를 모두 알려줘
     - 서울 마포갑 후보들은 누구?
