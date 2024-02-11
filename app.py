@@ -446,7 +446,7 @@ if prompt := st.chat_input():
 
         # st.write(response_content)
 
-        final_prompt_command=f"{result_prompt_command}\n\n사용자의 질문: {full_question}"
+        final_prompt_command=f"{result_prompt_command}\n\n사용자의 질문: {prompt}"
 
     with st.chat_message("assistant"):
         # 최종 프롬프트 명령을 기반으로 챗 모델을 사용하여 응답 생성
