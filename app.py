@@ -11,16 +11,32 @@ client = OpenAI(
     api_key=st.secrets["OPENAI_API_KEY"]
 )
 
-def download_and_store_df(file_id, key):
-    """파일을 다운로드하고 세션 상태에 저장하는 함수"""
+def download_and_store_df(file_id, key, timeout=10):
+    """파일을 다운로드하고 세션 상태에 저장하는 함수
+    :param file_id: 파일의 GitHub raw URL 또는 다른 파일 다운로드 URL
+    :param key: Streamlit 세션 상태에서 사용될 키 이름
+    :param timeout: requests.get 호출 시 사용될 타임아웃 값(초)
+    """
     if key not in st.session_state:
         download_url = f'https://raw.githubusercontent.com/Nasser-Lim/SBS_electionBOT/main/{file_id}'
-        response = requests.get(download_url)
-        if response.status_code == 200:  # 성공적으로 파일을 다운로드했는지 확인
-            df = pd.read_pickle(io.BytesIO(response.content))
-            st.session_state[key] = df
-        else:
-            st.error("파일 다운로드에 실패했습니다. URL을 확인해 주세요.")
+        
+        try:
+            # 타임아웃 설정을 포함한 파일 다운로드 시도
+            response = requests.get(download_url, timeout=timeout)
+            
+            # 성공적으로 파일을 다운로드했는지 확인
+            if response.status_code == 200:
+                df = pd.read_pickle(io.BytesIO(response.content))
+                st.session_state[key] = df
+            else:
+                st.error("파일 다운로드에 실패했습니다. HTTP 상태 코드: {}".format(response.status_code))
+        except requests.exceptions.Timeout:
+            # 타임아웃 예외 처리
+            st.error("파일 다운로드 중 타임아웃이 발생했습니다. 타임아웃 설정: {}초".format(timeout))
+        except requests.exceptions.RequestException as e:
+            # 그 외 requests 관련 예외 처리
+            st.error("파일 다운로드 중 오류가 발생했습니다: {}".format(e))
+
             
 # with st.spinner('총선 챗봇이 파일을 다운로드합니다..'):
 #         # 파일 ID를 사용한 다운로드 URL 생성
