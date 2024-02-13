@@ -14,11 +14,14 @@ client = OpenAI(
 def download_and_store_df(file_id, key):
     """파일을 다운로드하고 세션 상태에 저장하는 함수"""
     if key not in st.session_state:
-        download_url = f'https://drive.google.com/uc?export=download&id={file_id}'
+        download_url = f'https://raw.githubusercontent.com/Nasser-Lim/SBS_electionBOT/main/{file_id}'
         response = requests.get(download_url)
-        df = pd.read_pickle(io.BytesIO(response.content))
-        st.session_state[key] = df
-
+        if response.status_code == 200:  # 성공적으로 파일을 다운로드했는지 확인
+            df = pd.read_pickle(io.BytesIO(response.content))
+            st.session_state[key] = df
+        else:
+            st.error("파일 다운로드에 실패했습니다. URL을 확인해 주세요.")
+            
 # with st.spinner('총선 챗봇이 파일을 다운로드합니다..'):
 #         # 파일 ID를 사용한 다운로드 URL 생성
 #         file_id_선거구 = '1KJw12xawMoOd1RWOSo0ib6PkydLdwYar'
@@ -426,8 +429,8 @@ if prompt := st.chat_input():
     # 파일 다운로드가 필요한 경우만 다운로드 진행
     if "file_downloaded" not in st.session_state:
         with st.spinner('챗봇이 선거DB를 조회합니다..'):
-            download_and_store_df('1KJw12xawMoOd1RWOSo0ib6PkydLdwYar', 'df_선거구')
-            download_and_store_df('1Wc_lP14JjbOUxuUgZPwdkXDB79ccVai3', 'df_선거법')
+            download_and_store_df('2020small_district_embeddings.pkl', 'df_선거구')
+            download_and_store_df('election_info_embeddings.pkl', 'df_선거법')
             st.session_state["file_downloaded"] = True  # 파일 다운로드 상태 표시
 
     with st.spinner('챗봇이 관련 자료를 찾고 있습니다..'):
